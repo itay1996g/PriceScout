@@ -5,11 +5,13 @@ import { Results } from "@/pages/Results";
 import { Login } from "@/pages/Login";
 import { Register } from "@/pages/Register";
 import { useSearch } from "@/hooks/useSearch";
+import { PaywallModal } from "@/components/PaywallModal";
 
 function App() {
-  const { status, message, results, search, reset } = useSearch();
+  const { status, message, results, error, search, reset } = useSearch();
   const isSearching = status === "searching" || status === "analyzing";
   const showResults = status === "complete" || isSearching;
+  const showPaywall = error === "quota_exceeded";
 
   return (
     <BrowserRouter>
@@ -33,6 +35,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
         </Routes>
+        <PaywallModal open={showPaywall} onClose={reset} />
       </Layout>
     </BrowserRouter>
   );
