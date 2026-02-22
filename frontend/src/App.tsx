@@ -1,8 +1,24 @@
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Layout } from "@/components/Layout";
+import { Home } from "@/pages/Home";
+
 function App() {
   return (
-    <div className="min-h-screen bg-slate-50 flex items-center justify-center">
-      <h1 className="text-4xl font-bold text-slate-900">PriceScout</h1>
-    </div>
+    <BrowserRouter>
+      <Layout>
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <Home
+                onSearch={(query) => console.log("Search:", query)}
+                isSearching={false}
+              />
+            }
+          />
+        </Routes>
+      </Layout>
+    </BrowserRouter>
   );
 }
 
