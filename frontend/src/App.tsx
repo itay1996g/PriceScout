@@ -1,8 +1,14 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Layout } from "@/components/Layout";
 import { Home } from "@/pages/Home";
+import { Results } from "@/pages/Results";
+import { useSearch } from "@/hooks/useSearch";
 
 function App() {
+  const { status, message, results, search, reset } = useSearch();
+  const isSearching = status === "searching" || status === "analyzing";
+  const showResults = status === "complete" || isSearching;
+
   return (
     <BrowserRouter>
       <Layout>
@@ -10,10 +16,16 @@ function App() {
           <Route
             path="/"
             element={
-              <Home
-                onSearch={(query) => console.log("Search:", query)}
-                isSearching={false}
-              />
+              showResults ? (
+                <Results
+                  status={status}
+                  message={message}
+                  results={results}
+                  onNewSearch={reset}
+                />
+              ) : (
+                <Home onSearch={search} isSearching={isSearching} />
+              )
             }
           />
         </Routes>

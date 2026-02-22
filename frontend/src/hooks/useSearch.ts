@@ -1,5 +1,5 @@
 import { useState, useCallback } from "react";
-import { SearchResponse, SearchStatus, SearchEvent } from "@/types";
+import type { SearchResponse, SearchStatus, SearchEvent } from "@/types";
 
 export function useSearch() {
   const [status, setStatus] = useState<SearchStatus>("idle");
